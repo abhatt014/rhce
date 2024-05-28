@@ -1,0 +1,11 @@
+[webservers]
+web [1:9].example.com
+web12.example.com
+
+[fileservers]
+filel.example.com
+file2.example.com
+
+[servers:children]
+webservers
+fileservers
