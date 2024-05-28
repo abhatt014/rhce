@@ -1,0 +1,16 @@
+---
+- hosts:
+  tasks:
+  - name: show IP address
+    debug:
+      msg: >
+        This host uses IP address {{ ansible_facts.defautt_ipv4.address }}
+  - name: preferred notation
+    debug:
+      msg: this is the preferred notation {{ ansible_facts['default_ipv4']['address'] }}
+  - name: old notation
+    debug:
+      msg: my ip is {{ ansible_default_ipv4.address }}
+  - name:  this shouldn’t work
+    debug:
+      msg: the IP address is {{ ansible_facts.ansible_default_ipv4.address }}
