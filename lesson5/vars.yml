@@ -1,0 +1,14 @@
+---
+- name: create a user using a variable
+  hosts: ansiblel
+  tasks:
+    - name: using debug
+      debug:
+        msg: the username is { { user } }
+    - name: create a user { { user } }
+      user:
+        name: "{{ user }}"
+      register: task _ result      
+    - name: showing the result
+      debug:
+        var: task result
