@@ -1,0 +1,11 @@
+- name: copy index. html
+  copy:
+    src: /tmp/index.html
+    dest: /var/www/html/index.html
+  notify:
+    - restart web
+handlers:
+  - name: restart web
+    service:
+      name: httpd
+      state: restarted
