@@ -1,0 +1,7 @@
+- name: show register on random module
+  user: 
+    name: "{{username}}"
+  register: user
+- name: print
+  debug:
+    var: user
