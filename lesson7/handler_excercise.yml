@@ -1,0 +1,24 @@
+---
+- name: set up web server
+  hosts: all
+  force handlers: true
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: latest
+    - name: copy index.
+      copy:
+        src: /tnp/index .htmt
+        dest: /var/ww/htnl/index.html
+      notify: 
+        - restart wet
+    - name: copy nothing- will fail
+      copy:
+        src: /tmp/nothing
+        dest: /var/ww/html/nothing.html
+  handlers:
+    - name: restart web
+      service:
+        name: httpd
+        state: restarted
