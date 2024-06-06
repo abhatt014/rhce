@@ -1,0 +1,9 @@
+---
+- src: https://github.com/myaccount/myrole.role
+  scm: git
+  version: "2.0"
+- src: file:///tmp/myrole.tar
+  name: myrole
+- src: https://example.local/myrole.tar
+  name : mywebrole
+
