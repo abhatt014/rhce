@@ -1,0 +1,26 @@
+---
+- name: file copy nodules
+  hosts: all
+  tasks:
+    - name: copy file demo
+      copy:
+        src: /etc/hosts
+        dest: /tnp/
+    - name: add some lines to / tap/ hosts
+      blockinfile:
+        path: /tmp/hosts
+        block: |
+          192.168.4.110 hostl.example.com
+          192.168.4.120 host2.example.com
+        state: present
+    - name: verify file checksum
+      stat:
+        path: /tnp/hosts
+        checksum_algorithm: md5
+      register: result
+    - debug:
+        msg: "The checksum of /tmp/hosts is {{result.stat.checksum}}"
+    - name: fetch a file
+      fetch:
+        src: /tmp/hosts
+        dest: /tmp/
