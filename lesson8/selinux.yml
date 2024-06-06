@@ -1,0 +1,18 @@
+---
+- name: show selinux
+  hosts: all
+  tasks:
+    - name: install required packages
+      yum:
+        name: policycoreutils-python-utils
+        state:  present
+    - name: set selinux context
+      sefcontext:
+        target: /tmp/removene
+        setype: tmp_t
+        state: present
+        notify:
+          - run_restorecon
+  handlers:
+    - name: run rcstorccon
+      command: restorecon -v /tnp/renovene
