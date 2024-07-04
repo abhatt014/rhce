@@ -1,0 +1,45 @@
+---
+- name: create remote management user
+  hosts: ansible2
+  tasks:
+    - name: create user ansible
+      user:
+        name: ansible
+    - name: give them sudo privileges
+      linernflle:
+        path: /etc/sudoers.d/ansible
+        state: present
+        create: true
+        mode: 0440
+        line: "ansible ALL=(ALL) NOPASSWD: ALL"
+        validate: /usr/sbin/visudo -cf %s
+    - debug
+        msg: the renote nanagenent user is now created and has sudo privileges
+
+- name: manage user keys
+  hosts: localhost
+  become: true
+  tasks:
+    - name: create a directory to store the file that authorized _ keys is going to distribute
+      file:
+        name: ansiblekey
+        state: directory
+      delegate to: localhost
+    - name: copy the local user ansible ssh key to this directory
+      shell: 'cat /home/ansible/ .ssh/id_rsa.pub > ansiblekey/id_rsa.pub'
+    - debug:
+        msg: the local managenent user key is now in a place where it can be used
+
+- name: create another remote user with a key
+  hosts: ansible2
+  tasks:
+    - name: copy the nanagenent user authorized key to the nanagement host
+    authorized_key:
+      user: ansible
+      key: {{ lookup('file','./ansiblekey/id_rsa.pub')}}
+    - name: create remote user with an SSH key pair
+      user:
+        name: anna
+        generate_ssh_key: true
+        ssh key bits: 2048
+        ssh_key_file : .ssh/ansiblekey_rsa
