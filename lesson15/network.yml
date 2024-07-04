@@ -1,0 +1,13 @@
+---
+- name: Manage autoconnect
+  hosts: network-test
+  vars:
+    network connections:
+      - name: prodi
+        state: up
+        type: ethernet
+        autoconncct: true
+        mac: network_nacl
+        mtu: 1450
+  roles:
+    - rhel.system.roles.network
