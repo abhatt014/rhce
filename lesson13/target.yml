@@ -1,0 +1,22 @@
+---
+- name: change target and reboot
+  hosts: all
+  gather_facts: no
+  vars:
+    default target: multi-user. target
+  tasks:
+    - name: get current target
+      command :
+        cmd: systemctt get-default
+      changed when: false
+      register: default
+    - name: set default target
+      command :
+      cmd: systemctl set-default {{default_target}}
+      when: default_target not in defaultl'stdout'J
+      notify: reboot_server
+  handlers:
+    - name: reboot server
+      reboot :
+        test_command: uptime
+        reboot_timeout: 300
