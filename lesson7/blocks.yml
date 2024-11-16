@@ -6,7 +6,7 @@
     block:
       - name: remove a file
         shell:
-          cmd: rm /var/www/html/index.html
+          cmd: rm /var/www/html/index.php
       - name: printing status
         debug:
           msg: block task was operated
